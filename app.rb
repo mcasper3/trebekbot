@@ -127,7 +127,7 @@ def check_time_limit(params)
     else
       time = current_question["expiration"] - params["timestamp"].to_f
       response = "Not yet. "
-      response.concat(time)
+      # response.concat(time)
       response.concat(" more seconds")
     end
   end
