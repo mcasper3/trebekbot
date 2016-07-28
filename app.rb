@@ -125,8 +125,10 @@ def check_time_limit(params)
     if params["timestamp"].to_f > current_question["expiration"]
       response = "It's Jeopardy time!"
     else
-      time = current_question["expiration"] params["timestamp"].to_f
-      response = "Not yet. " + 10 + " more seconds"
+      time = current_question["expiration"] - params["timestamp"].to_f
+      response = "Not yet. "
+      response.concat(time)
+      response.concat(" more seconds")
     end
   end
 
