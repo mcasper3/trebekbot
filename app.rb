@@ -48,6 +48,8 @@ post "/" do
       response = respond_with_question(params)
     elsif params[:text].match(/^jm/i)
       response = respond_with_question(params)
+    elsif params[:text].match(/^question time/i)
+      response = check_time_limit(params)
     elsif params[:text].match(/my score$/i)
       response = respond_with_user_score(params[:user_id])
     elsif params[:text].match(/^help$/i)
@@ -105,6 +107,15 @@ def respond_with_question(params)
       $redis.set(key, response.to_json)
       $redis.setex("shush:question:#{channel_id}", 15, "true")
     end
+  end
+  question
+end
+
+# Checks if it has been 30 seconds since the question was asked
+def check_time_limit(params)
+  question = "No."
+  unless $redis.exists("current_question:#{channel_id}")
+    question = "/giphy jeopardy time"
   end
   question
 end
@@ -175,7 +186,7 @@ def process_answer(params)
       addOn = ""
       if 1 + rand(10) > 9
         names = ["Jon", "Will", "James", "Mike", "Ryan", "Grace", "Andie", "Autumn", "Chris", "Justin"]
-        addOn = " I bet"
+        addOn = " I bet "
         addOn.concat(names[rand(names.count) + 1])
         addOn.concat(" would have gotten it.")
       end
