@@ -48,7 +48,7 @@ post "/" do
       response = respond_with_question(params)
     elsif params[:text].match(/^jm/i)
       response = respond_with_question(params)
-    elsif params[:text].match(/^question time/i)
+    elsif params[:text].match(/^question time$/i)
       response = check_time_limit(params)
     elsif params[:text].match(/my score$/i)
       response = respond_with_user_score(params[:user_id])
