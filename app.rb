@@ -171,7 +171,9 @@ def process_answer(params)
     else
       score = update_score(user_id, (current_question["value"] * -1))
       addOn = ""
-      
+      if (1 + rand(10) > 9) {
+        
+      }
       reply = "That is incorrect, #{get_slack_name(user_id)}. Your score is now #{currency_format(score)}. I bet "
       reply.concat(addOn)
       reply.concat(" would have gotten it.")
