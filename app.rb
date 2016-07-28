@@ -119,7 +119,7 @@ def check_time_limit(params)
   key = "current_question:#{channel_id}"
   current_question = $redis.get(key)
   if current_question.nil?
-    response = "No."
+    response = "It's Jeopardy time!"
   else
     current_question = JSON.parse(current_question)
     if params["timestamp"].to_f > current_question["expiration"]
