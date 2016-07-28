@@ -121,7 +121,7 @@ def check_time_limit(params)
   if current_question.nil?
     response = "No."
   else
-    JSON.parse(current_question)
+    current_question = JSON.parse(current_question)
     if params["timestamp"].to_f > current_question["expiration"]
       response = "It's Jeopardy time!"
     end
