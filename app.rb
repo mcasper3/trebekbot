@@ -173,11 +173,12 @@ def process_answer(params)
       addOn = ""
       if 1 + rand(10) > 9
         names = ["Jon", "Will", "James", "Mike", "Ryan", "Grace", "Andie", "Autumn", "Chris", "Justin"]
-        addOn = names[rand(names.count) + 1]
+        addOn = " I bet"
+        addOn.concat(names[rand(names.count) + 1])
+        reply.concat(" would have gotten it.")
       end
-      reply = "That is incorrect, #{get_slack_name(user_id)}. Your score is now #{currency_format(score)}. I bet "
+      reply = "That is incorrect, #{get_slack_name(user_id)}. Your score is now #{currency_format(score)}."
       reply.concat(addOn)
-      reply.concat(" would have gotten it.")
       $redis.setex(answered_key, ENV["SECONDS_TO_ANSWER"], "true")
     end
   end
