@@ -113,11 +113,11 @@ end
 
 # Checks if it has been 30 seconds since the question was asked
 def check_time_limit(params)
-  question = "No."
+  response = "No."
   unless $redis.exists("current_question:#{channel_id}")
-    question = "\/giphy jeopardy time"
+    response = "It's Jeopardy time!"
   end
-  question
+  response
 end
 
 # Gets a random answer from the jService API, and does some cleanup on it:
