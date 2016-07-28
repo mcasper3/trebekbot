@@ -456,7 +456,7 @@ end
 #
 def respond_with_help
   reply = <<help
-You can type either `#{ENV["BOT_USERNAME"]}` or `#{ENV["tb"]}` for each of these commands.
+You can type either `#{ENV["BOT_USERNAME"]}` or `tb` for each of these commands.
 Type `#{ENV["BOT_USERNAME"]} jeopardy me` to start a new round of Slack Jeopardy. I will pick the category and price. Anyone in the channel can respond.
 Type `#{ENV["BOT_USERNAME"]} [what|where|who] [is|are] [answer]?` to respond to the active round. You have #{ENV["SECONDS_TO_ANSWER"]} seconds to answer. Remember, responses must be in the form of a question, e.g. `#{ENV["BOT_USERNAME"]} what is dirt?`.
 Type `#{ENV["BOT_USERNAME"]} what is my score` to see your current score.
