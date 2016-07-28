@@ -115,7 +115,7 @@ end
 def check_time_limit(params)
   question = "No."
   unless $redis.exists("current_question:#{channel_id}")
-    question = "/giphy jeopardy time"
+    question = "\/giphy jeopardy time"
   end
   question
 end
