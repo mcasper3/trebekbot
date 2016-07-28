@@ -170,14 +170,7 @@ def process_answer(params)
       $redis.setex(answered_key, ENV["SECONDS_TO_ANSWER"], "true")
     else
       score = update_score(user_id, (current_question["value"] * -1))
-      addOn = ""
-      if (1 + rand(10) > 9) {
-        names = ["Jon", "Will", "James", "Mike", "Ryan", "Grace", "Andie", "Autumn", "Chris", "Justin"]
-        addOn = names[rand(names.count) + 1]
-      }
       reply = "That is incorrect, #{get_slack_name(user_id)}. Your score is now #{currency_format(score)}. I bet "
-      reply.concat(addOn)
-      reply.concat(" would have gotten it.")
       $redis.setex(answered_key, ENV["SECONDS_TO_ANSWER"], "true")
     end
   end
@@ -422,7 +415,6 @@ def trebek_me
   [ "Welcome back to Slack Jeopardy. Before we begin this Jeopardy round, I'd like to ask our contestants once again to please refrain from using ethnic slurs.",
     "Okay, Turd Ferguson.",
     "I hate my job.",
-    "I bet Will would have gotten that one.",
     "Let's just get this over with.",
     "Do you have an answer?",
     "I don't believe this. Where did you get that magic marker? We frisked you on the way in here.",
