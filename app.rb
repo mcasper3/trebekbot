@@ -48,7 +48,7 @@ post "/" do
       response = respond_with_question(params)
     elsif params[:text].match(/^jm/i)
       response = respond_with_question(params)
-    elsif params[:text].match(/^question time$/i)
+    elsif params[:text].match(/^time/i)
       response = check_time_limit(params)
     elsif params[:text].match(/my score$/i)
       response = respond_with_user_score(params[:user_id])
@@ -114,7 +114,7 @@ end
 # Checks if it has been 30 seconds since the question was asked
 def check_time_limit(params)
   response = "No."
-  unless $redis.exists("current_question:#{channel_id}")
+  if params["timestamp"].to_f > current_question["expiration"]
     response = "It's Jeopardy time!"
   end
   response
