@@ -113,8 +113,12 @@ end
 
 # Checks if it has been 30 seconds since the question was asked
 def check_time_limit(params)
+  channel_id = params[:channel_id]
+  key = "current_question:#{channel_id}"
+  current_question = $redis.get(key)
+
   response = "No."
-  if params.count > 0
+  if params["timestamp"].to_f > current_question["expiration"]
     response = "It's Jeopardy time!"
   end
   response
