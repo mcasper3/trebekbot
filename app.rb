@@ -177,7 +177,7 @@ def process_answer(params)
         names = ["Jon", "Will", "James", "Mike", "Ryan", "Grace", "Andie", "Autumn", "Chris", "Justin"]
         addOn = " I bet"
         addOn.concat(names[rand(names.count) + 1])
-        reply.concat(" would have gotten it.")
+        addOn.concat(" would have gotten it.")
       end
       reply = "That is incorrect, #{get_slack_name(user_id)}. Your score is now #{currency_format(score)}."
       reply.concat(addOn)
