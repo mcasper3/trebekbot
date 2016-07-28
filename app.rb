@@ -114,7 +114,9 @@ end
 # Checks if it has been 30 seconds since the question was asked
 def check_time_limit(params)
   response = "No."
-  
+  if params.count > 0
+    response = "It's Jeopardy time!"
+  end
   response
 end
 
