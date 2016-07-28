@@ -124,6 +124,8 @@ def check_time_limit(params)
     current_question = JSON.parse(current_question)
     if params["timestamp"].to_f > current_question["expiration"]
       response = "It's Jeopardy time!"
+    else
+      response = "Not yet."
     end
   end
 
