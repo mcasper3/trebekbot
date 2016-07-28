@@ -126,7 +126,7 @@ def check_time_limit(params)
       response = "It's Jeopardy time! :lunge:"
     else
       time = current_question["expiration"] - params["timestamp"].to_f
-      response = "Not yet. #{time.round} more seconds"
+      response = "Not yet. #{time.round} more seconds :will:"
     end
   end
 
