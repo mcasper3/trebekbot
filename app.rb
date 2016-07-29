@@ -191,8 +191,12 @@ def process_answer(params)
       name = get_slack_name(user_id)
 
       if name == "James"
-        name = "Will"
-        score *= 1.5
+        chance = rand(30) + 1
+
+        if (chace > 29)
+          name = "Will"
+          score *= 1.5
+        end
       end
 
       reply = "That is correct, #{name}. Your total score is #{currency_format(score.abs)}."
