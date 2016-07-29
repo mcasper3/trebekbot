@@ -187,7 +187,15 @@ def process_answer(params)
       mark_question_as_answered(params[:channel_id])
     elsif is_question_format?(user_answer) && is_correct_answer?(current_answer, user_answer)
       score = update_score(user_id, current_question["value"])
-      reply = "That is correct, #{get_slack_name(user_id)}. Your total score is #{currency_format(score)}."
+
+      name = get_slack_name(user_id)
+
+      if name == "James"
+        name = "Will"
+        score *= 1.5
+      end
+
+      reply = "That is correct, #{name}. Your total score is #{currency_format(score.abs)}."
       mark_question_as_answered(params[:channel_id])
     elsif is_correct_answer?(current_answer, user_answer)
       score = update_score(user_id, (current_question["value"] * -1))
