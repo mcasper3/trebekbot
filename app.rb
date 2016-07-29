@@ -190,16 +190,16 @@ def process_answer(params)
 
       name = get_slack_name(user_id)
 
-      if name == "James"
-        chance = rand(30) + 1
+      #if name == "James"
+      #  chance = rand(30) + 1
 
-        if (chace > 29)
-          name = "Will"
-          score *= 1.5
-        end
-      end
+      #  if (chace > 29)
+      #    name = "Will"
+      #    score *= 1.5
+      #  end
+      #end
 
-      reply = "That is correct, #{name}. Your total score is #{currency_format(score.abs)}."
+      reply = "That is correct, #{name}. Your total score is #{score}."
       mark_question_as_answered(params[:channel_id])
     elsif is_correct_answer?(current_answer, user_answer)
       score = update_score(user_id, (current_question["value"] * -1))
