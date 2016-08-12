@@ -6,6 +6,7 @@ require "redis"
 require "dotenv"
 require "text"
 require "sanitize"
+require "date"
 
 configure do
   # Load .env vars
