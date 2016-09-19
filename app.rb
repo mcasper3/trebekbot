@@ -121,14 +121,14 @@ def check_time_limit(params)
   key = "current_question:#{channel_id}"
   current_question = $redis.get(key)
   if current_question.nil?
-    response = "It's Jeopardy time! :lunge:"
+    response = "It's Jeopardy time!"
   else
     current_question = JSON.parse(current_question)
     if params["timestamp"].to_f > current_question["expiration"]
-      response = "It's Jeopardy time! :lunge:"
+      response = "It's Jeopardy time!"
     else
       time = current_question["expiration"] - params["timestamp"].to_f
-      response = "Not yet. #{time.round} more seconds :will:"
+      response = "Not yet. #{time.round} more seconds"
     end
   end
 
@@ -193,13 +193,12 @@ def process_answer(params)
     elsif is_correct_answer?(current_answer, user_answer)
       score = update_score(user_id, (current_question["value"] * -1))
       reply = "That is correct, #{get_slack_name(user_id)}, but responses have to be in the form of a question. Your total score is #{currency_format(score)}."
-      mark_question_as_answered(params[:channel_id])
       $redis.setex(answered_key, ENV["SECONDS_TO_ANSWER"], "true")
     else
       score = update_score(user_id, (current_question["value"] * -1))
       addOn = ""
       if 1 + rand(10) > 9
-        names = ["Jon", "Will", "James", "Mike", "Ryan", "Grace", "Andie", "Autumn", "Chris", "Justin"]
+        names = ["Ian", "Zach", "Joel", "Rebecca", "Caleb", "Mike"]
         addOn = " I bet "
         addOn.concat(names[rand(names.count) + 1])
         addOn.concat(" would have gotten it.")
