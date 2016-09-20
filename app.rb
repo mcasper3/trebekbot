@@ -191,9 +191,13 @@ def process_answer(params)
       reply = "That is correct, #{get_slack_name(user_id)}. Are you sure you don't want to listen in class instead? Your total score is #{currency_format(update_score(user_id, current_question["value"]))}."
       mark_question_as_answered(params[:channel_id])
     elsif is_correct_answer?(current_answer, user_answer)
-      score = update_score(user_id, (current_question["value"] * -1))
-      reply = "That is correct, #{get_slack_name(user_id)}, but responses have to be in the form of a question. Your total score is #{currency_format(score)}."
-      $redis.setex(answered_key, ENV["SECONDS_TO_ANSWER"], "true")
+      name = get_slack_name(user_id)
+      if name == "Turd"
+        reply = "Come on, Turd. Let the kids play!"
+      else
+        score = update_score(user_id, (current_question["value"] * -1))
+        reply = "That is correct, #{get_slack_name(user_id)}, but responses have to be in the form of a question. Your total score is #{currency_format(score)}."
+        $redis.setex(answered_key, ENV["SECONDS_TO_ANSWER"], "true")
     else
       score = update_score(user_id, (current_question["value"] * -1))
       addOn = ""
