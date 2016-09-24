@@ -108,6 +108,7 @@ def respond_with_question(params)
     end
     date = Date.parse(response["airdate"])
     question += "The category is `#{response["category"]["title"]}` for #{currency_format(response["value"])} (from `#{date.strftime("%Y")}`): `#{response["question"]}`"
+    timeToWait = $redis.get("time_to_wait")
     time = 15
     if timeToWait == "30"
       time = 30
