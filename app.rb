@@ -108,15 +108,14 @@ def respond_with_question(params)
     end
     date = Date.parse(response["airdate"])
     question += "The category is `#{response["category"]["title"]}` for #{currency_format(response["value"])} (from `#{date.strftime("%Y")}`): `#{response["question"]}`"
-    timeToWait = $redis.get("time_to_wait")
-    question += "(" + timeToWait + ")"
+    time = 15
+    if timeToWait == "30"
+      time = 30
+    end
+    
     puts "[LOG] ID: #{response["id"]} | Category: #{response["category"]["title"]} | Question: #{response["question"]} | Answer: #{response["answer"]} | Value: #{response["value"]}"
     $redis.pipelined do
       $redis.set(key, response.to_json)
-      time = 15
-      #if timeToWait == "30"
-      #  time = 30
-      #end
       $redis.setex("shush:question:#{channel_id}", time, "true")
     end
   end
