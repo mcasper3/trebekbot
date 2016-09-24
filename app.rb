@@ -230,7 +230,7 @@ def process_answer(params)
       mark_question_as_answered(params[:channel_id])
     elsif is_question_format?(user_answer) && is_correct_answer?(current_answer, user_answer)
       name = get_slack_name(user_id)
-      if name == "Turd"
+      if name == "Turd" && false
         reply = "Come on, Turd. Let the kids play!"
       else
         reply = "That is correct, #{get_slack_name(user_id)}. Your total score is #{currency_format(update_score(user_id, current_question["value"]))}."
