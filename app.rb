@@ -49,6 +49,10 @@ post "/" do
       response = respond_with_question(params)
     elsif params[:text].match(/^jm/i)
       response = respond_with_question(params)
+    elsif params[:text].match(/^be polite/i)
+      response = enable_politeness(params)
+    elsif params[:text].match(^/stop being polite/i)
+      response = disable_politeness(params)
     elsif params[:text].match(/^time/i)
       response = check_time_limit(params)
     elsif params[:text].match(/my score$/i)
@@ -107,10 +111,41 @@ def respond_with_question(params)
     puts "[LOG] ID: #{response["id"]} | Category: #{response["category"]["title"]} | Question: #{response["question"]} | Answer: #{response["answer"]} | Value: #{response["value"]}"
     $redis.pipelined do
       $redis.set(key, response.to_json)
-      $redis.setex("shush:question:#{channel_id}", 30, "true")
+      timeToWait = $redis.get("time_to_wait")
+      $redis.setex("shush:question:#{channel_id}", timeToWait, "true")
     end
   end
   question
+end
+
+def enable_politeness(params)
+  response = ""
+  user_id = params[:user_id]
+  name = get_slack_name(user_id)
+  
+  if name == "Mike"
+    $redis.set("time_to_wait", 30)
+    response = "Time to make it a little more fair."
+  else
+    response = "Nah fam."
+  end
+  
+  response
+end
+
+def disable_politeness(params)
+  response = ""
+  user_id = params[:user_id]
+  name = get_slack_name(user_id)
+  
+  if name == "Mike"
+    $redis.set("time_to_wait", 15)
+    response = "You asked for it."
+  else
+    response = "Nah fam."
+  end
+  
+  response
 end
 
 # Checks if it has been 30 seconds since the question was asked
@@ -258,6 +293,16 @@ def is_correct_answer?(correct, answer)
             .gsub("eight", "8")
             .gsub("nine", "9")
             .gsub("ten", "10")
+            .gsub("eleven", "11")
+            .gsub("twelve", "12")
+            .gsub("thirteen", "13")
+            .gsub("fourteen", "14")
+            .gsub("fifteen", "15")
+            .gsub("sixteen", "16")
+            .gsub("seventeen", "17")
+            .gsub("eighteen", "18")
+            .gsub("nineteen", "19")
+            .gsub("twenty", "20")
             .strip
             .downcase
   answer = answer
@@ -277,6 +322,16 @@ def is_correct_answer?(correct, answer)
            .gsub("eight", "8")
            .gsub("nine", "9")
            .gsub("ten", "10")
+           .gsub("eleven", "11")
+           .gsub("twelve", "12")
+           .gsub("thirteen", "13")
+           .gsub("fourteen", "14")
+           .gsub("fifteen", "15")
+           .gsub("sixteen", "16")
+           .gsub("seventeen", "17")
+           .gsub("eighteen", "18")
+           .gsub("nineteen", "19")
+           .gsub("twenty", "20")
            .strip
            .downcase
   white = Text::WhiteSimilarity.new
