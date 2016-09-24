@@ -123,7 +123,7 @@ def enable_politeness(params)
   user_id = params[:user_id]
   name = get_slack_name(user_id)
   
-  if name == "Mike"
+  if name == "Michael"
     $redis.set("time_to_wait", 30)
     response = "Time to make it a little more fair."
   else
@@ -138,7 +138,7 @@ def disable_politeness(params)
   user_id = params[:user_id]
   name = get_slack_name(user_id)
   
-  if name == "Mike"
+  if name == "Michael"
     $redis.set("time_to_wait", 15)
     response = "You asked for it."
   else
