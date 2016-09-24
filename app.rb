@@ -112,7 +112,11 @@ def respond_with_question(params)
     $redis.pipelined do
       $redis.set(key, response.to_json)
       timeToWait = $redis.get("time_to_wait")
-      $redis.setex("shush:question:#{channel_id}", 15, "true")
+      time = 15
+      if timeToWait == "30"
+        time = 30
+      end
+      $redis.setex("shush:question:#{channel_id}", time, "true")
     end
   end
   question
