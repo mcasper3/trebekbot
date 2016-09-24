@@ -51,7 +51,7 @@ post "/" do
       response = respond_with_question(params)
     elsif params[:text].match(/^be polite/i)
       response = enable_politeness(params)
-    elsif params[:text].match(^/stop being polite/i)
+    elsif params[:text].match(/^stop being polite/i)
       response = disable_politeness(params)
     elsif params[:text].match(/^time/i)
       response = check_time_limit(params)
