@@ -130,8 +130,7 @@ def enable_politeness(params)
   
   if name == "Michael"
     $redis.set("time_to_wait", 30)
-    temp = $redis.get("time_to_wait")
-    response = "Time to make it a little more fair." + temp
+    response = "Time to make it a little more fair."
   else
     response = "Nah fam."
   end
