@@ -53,6 +53,8 @@ post "/" do
       response = enable_politeness(params)
     elsif params[:text].match(/^stop being polite/i)
       response = disable_politeness(params)
+    elsif params[:text].match(/^reset/i)
+      response = fake_reset(params)
     elsif params[:text].match(/^time/i)
       response = check_time_limit(params)
     elsif params[:text].match(/my score$/i)
@@ -193,6 +195,17 @@ def get_question
   response["answer"] = Sanitize.fragment(response["answer"].gsub(/\s+(&nbsp;|&)\s+/i, " and "))
   response["expiration"] = params["timestamp"].to_f + ENV["SECONDS_TO_ANSWER"].to_f
   response
+end
+
+def fake_reset(params)
+  user_name = params[:text]
+  user_id = params[:user_id]
+  name = get_slack_name(user_id)
+  reply = "Whatchu talkin' 'bout"
+  if name == "Michael"
+    reply = "#{user_name}'s score is now 0."
+  end
+  reply
 end
 
 # Processes an answer submitted by a user in response to a Jeopardy round:
