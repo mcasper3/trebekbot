@@ -41,6 +41,7 @@ post "/" do
   begin
     puts "[LOG] #{params}"
     params[:text] = params[:text].sub(params[:trigger_word], "").strip
+    puts "[LOG] checking for correct command"
     if params[:token] != ENV["OUTGOING_WEBHOOK_TOKEN"]
       response = "Invalid token"
     elsif is_channel_blacklisted?(params[:channel_name])
@@ -92,6 +93,7 @@ end
 # (this is so two or more users can't do `jeopardy me` within 5 seconds of each other.)
 #
 def respond_with_question(params)
+  puts "[LOG] responding with question"
   channel_id = params[:channel_id]
   question = ""
   unless $redis.exists("shush:question:#{channel_id}")
