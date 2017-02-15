@@ -99,6 +99,7 @@ def respond_with_question(params)
   unless $redis.exists("shush:question:#{channel_id}")
     response = get_question
     key = "current_question:#{channel_id}"
+    puts "[LOG] after key obtaining"
     previous_question = $redis.get(key)
     if !previous_question.nil?
       previous_question = JSON.parse(previous_question)["answer"]
@@ -144,6 +145,7 @@ end
 # Adds an "expiration" value, which is the timestamp of the Slack request + the seconds to answer config var
 #
 def get_question
+  puts "[LOG] getting question from API"
   uri = "http://jservice.io/api/random?count=1"
   request = HTTParty.get(uri)
   puts "[LOG] #{request.body}"
@@ -154,6 +156,7 @@ def get_question
   response["value"] = 200 if response["value"].nil?
   response["answer"] = Sanitize.fragment(response["answer"].gsub(/\s+(&nbsp;|&)\s+/i, " and "))
   response["expiration"] = params["timestamp"].to_f + ENV["SECONDS_TO_ANSWER"].to_f
+  puts "[LOG] obtained response from api"
   response
 end
 
